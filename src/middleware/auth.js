@@ -15,8 +15,10 @@ const auth=async (req, res, next)=>{
 
     } catch (error) {
         res.status(401).send({
-            status: 'error',
-            status_message: 'Authentication required!'
+            response: {
+                code: 401,
+                message: 'authentication required'
+            }
         })
     }
 }

@@ -26,6 +26,10 @@ const userSchema=mongoose.Schema({
         required: true,
         minlength: 8,
     },
+    verified: {
+        type: Boolean,
+        default: false
+    },
     tokens: [{
         token: {
             type: String,
