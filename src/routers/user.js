@@ -5,7 +5,7 @@ const auth=require('../middleware/auth')
 const router = express.Router()
 
 router.post('/user/create', async (req, res)=>{
-    const user=User(req.body)
+    const user=new User(req.body)
     try {
         await user.save()
         const token=await user.generateAuthToken()
