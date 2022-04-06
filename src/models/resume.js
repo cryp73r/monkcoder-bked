@@ -20,7 +20,7 @@ const resumeSchema=mongoose.Schema({
         }
     },
     photo: {
-        type: Buffer
+        type: String
     },
     summary: {
         type: String,
@@ -38,6 +38,15 @@ const resumeSchema=mongoose.Schema({
         required: true,
         trim: true
     },
+    pincode: {
+        type: Number,
+        required: true,
+        
+    },
+    city: {
+        type: String,
+        required: true
+    },
     state: {
         type: String,
         required: true
@@ -46,40 +55,34 @@ const resumeSchema=mongoose.Schema({
         type: String,
         required: true
     },
-    educations: [{
-        education: {
-            type: Map,
-            required: true
-        }
-    }],
-    skills: [{
-        skill: {
-            type: String,
-            required: true
-        }
-    }],
-    certificates: [{
-        certificate: {
-            type: Map
-        }
-    }],
-    languages: [{
-        language: {
-            type: String,
-            required: true
-        }
-    }],
-    workExperiences: [{
-        workExperience: {
-            type: Map,
-        }
-    }],
-    interests: [{
-        interest: {
-            type: String,
-            required: true
-        }
-    }],
+    educations: {
+        type: Array,
+        of: Map
+    },
+    skills: {
+        type: Array,
+        of: String
+    },
+    certificates: {
+        type: Array,
+        of: Map
+    },
+    languages: {
+        type: Array,
+        of: String
+    },
+    workExperiences: {
+        type: Array,
+        of: Map
+    },
+    achievements: {
+        type: Array,
+        of: Map
+    },
+    interests: {
+        type: Array,
+        of: String
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
