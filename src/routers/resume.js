@@ -19,12 +19,19 @@ router.post('/resume/create', auth, async (req, res)=>{
             resume
         })
     } catch (error) {
+        if (error.name === 'MongoServerError' && error.code === 11000) {
+            return res.status(400).send({
+                response: {
+                    code: 400,
+                    message: 'resume already exists for current user'
+                }
+            })
+        }
         res.status(400).send({
             response: {
                 code: 400,
                 message: 'bad request'
-            },
-            error
+            }
         })
     }
 })

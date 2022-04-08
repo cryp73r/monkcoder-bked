@@ -2,6 +2,7 @@ const mongoose=require('mongoose')
 const validator=require('validator')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcryptjs')
+const Resume=require('./resume')
 
 const userSchema=mongoose.Schema({
     name: {
@@ -74,6 +75,12 @@ userSchema.pre('save', async function (next) {
         const fname=user.name.split(" ")[0]
         user.password=await bcrypt.hash(user.password, fname.length>8?fname.length:8)
     }
+    next()
+})
+
+userSchema.pre('remove', async function (next) {
+    const user=this
+    await Resume.deleteOne({createdBy: user._id})
     next()
 })
 
