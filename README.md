@@ -13,3 +13,6 @@ We are a Team of 6 members:-
 ## API Documentation
 
 ### 1. User
+
+| Method | Endpoint | Description |
+|
