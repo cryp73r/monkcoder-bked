@@ -15,6 +15,12 @@ We are a Team of 6 members:-
 
 ### 1. User
 
-| Method | Endpoint | Description |
-| ------ | -------- | ----------- |
-| GET | `/user/create` | creates new user<br />`name`, `email` and `password` are required fields. To be sent as a JSON request body |
+| Method | Endpoint | Description | Parameter |
+| ------ | -------- | ----------- | --------- |
+| POST | `/user/create` | Creates New User | `name`, `email` & `password` are required fields<br />To be sent as a JSON request body |
+| POST | `/user` | Login User | `email` and `password` are required fields<br />To be sent as a JSON request body |
+| GET | `/user` | Get User Details | `Authorization` header field required |
+| POST | `/user/logout` | Logout User | `Authorization` header field required |
+| POST | `/user/logoutall` | Logout All User | `Authorization` header field required |
+| PATCH | `/user` | Update User Details | `Authorization` header field required<br />`name`, `email` & `password` are allowed update<br />To be sent as a JSON request body |
+| DELETE | `/user` | Delete User | `Authorization` header field required |
