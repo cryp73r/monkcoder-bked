@@ -18,6 +18,14 @@ router.post('/user/create', async (req, res)=>{
             token
         })
     } catch (error) {
+        if (error.name === 'MongoServerError' && error.code === 11000) {
+            return res.status(400).send({
+                response: {
+                    code: 400,
+                    message: 'email already exists'
+                }
+            })
+        }
         res.status(400).send({
             response: {
                 code: 400,
