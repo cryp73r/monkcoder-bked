@@ -17,4 +17,4 @@ We are a Team of 6 members:-
 
 | Method | Endpoint | Description |
 | ------ | -------- | ----------- |
-| GET | `/user/create` | creates new user  `name`, `email` and `password` are required fields. To be sent as a JSON request body |
+| GET | `/user/create` | creates new user<br />`name`, `email` and `password` are required fields. To be sent as a JSON request body |
