@@ -1,5 +1,5 @@
 const express=require('express')
-const auth=require('../middleware/auth')
+const auth=require('../middleware/userAuth')
 const Resume=require('../models/resume')
 
 const router=express.Router()

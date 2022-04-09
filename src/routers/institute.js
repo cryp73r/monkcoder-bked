@@ -1,35 +1,23 @@
 const express=require('express')
-const auth=require('../middleware/userAuth')
-const User=require('../models/user')
+const auth=require('../middleware/instituteAuth')
+const Institute=require('../models/institute')
 
 const router = express.Router()
 
-router.get('/', (req, res)=>{
-    res.redirect('https://github.com/cryp73r/monkcoder-bked')
-})
-
-router.post('/user/create', async (req, res)=>{
-    const user=new User(req.body)
+router.post('/institute/create', async (req, res)=>{
+    const institute=new Institute(req.body)
     try {
-        await user.save()
-        const token=await user.generateAuthToken()
+        await institute.save()
+        const token=institute.generateAuthToken()
         res.status(201).send({
             response: {
                 code: 201,
                 message: 'created'
             },
-            user,
+            institute,
             token
         })
     } catch (error) {
-        if (error.name === 'MongoServerError' && error.code === 11000) {
-            return res.status(400).send({
-                response: {
-                    code: 400,
-                    message: 'email already exists'
-                }
-            })
-        }
         res.status(400).send({
             response: {
                 code: 400,
@@ -39,26 +27,26 @@ router.post('/user/create', async (req, res)=>{
     }
 })
 
-router.post('/user', async (req, res)=>{
+router.post('/institute', async (req, res)=>{
     const email=req.body.email
     const password=req.body.password
     try {
-        const user=await User.findByCredentials(email, password)
-        const token=await user.generateAuthToken()
+        const institute=await Institute.findByCredentials(email, password)
+        const token=await institute.generateAuthToken()
         res.status(200).send({
             response: {
                 code: 200,
                 message: 'logged-in'
             },
-            user,
+            institute,
             token
         })
     } catch (error) {
-        if (error.message === 'UserNotExist') {
+        if (error.message === 'InstituteNotExist') {
             return res.status(404).send({
                 response: {
                     code: 404,
-                    message: 'user not registered'
+                    message: 'institute not registered'
                 }
             })
         } else if (error.message === 'PasswordNotMatch') {
@@ -78,26 +66,26 @@ router.post('/user', async (req, res)=>{
     }
 })
 
-router.get('/user', auth, (req, res)=>{
-    const user=req.user
+router.get('/institute', auth, (req, res)=>{
+    const institute=req.institute
     const token=req.token
     res.status(200).send({
         response: {
             code: 200,
             message: 'successful'
         },
-        user,
+        institute,
         token
     })
 })
 
-router.post('/user/logout', auth, async (req, res)=>{
-    const user=req.user
+router.post('/institute/logout', auth, async (req, res)=>{
+    const institute=req.institute
     try {
-        user.tokens=user.tokens.filter((token)=>{
+        institute.tokens=institute.tokens.filter((token)=>{
             return token.token!==req.token
         })
-        await user.save()
+        await institute.save()
         res.status(200).send({
             response: {
                 code: 200,
@@ -112,11 +100,11 @@ router.post('/user/logout', auth, async (req, res)=>{
     }
 })
 
-router.post('/user/logoutall', auth, async (req, res)=>{
-    const user=req.user
+router.post('/institute/logoutall', auth, async (req, res)=>{
+    const institute=req.institute
     try {
-        user.tokens=[]
-        await user.save()
+        institute.tokens=[]
+        await institute.save()
         res.status(200).send({
             response: 200,
             message: 'logged-out-all'
@@ -129,9 +117,9 @@ router.post('/user/logoutall', auth, async (req, res)=>{
     }
 })
 
-router.patch('/user', auth, async (req, res)=>{
+router.patch('/institute', auth, async (req, res)=>{
     const updates=Object.keys(req.body)
-    const allowedUpdates=['name', 'email', 'password']
+    const allowedUpdates=['email', 'password', 'summary', 'contactNo', 'alternateNo', 'address', 'pincode', 'city', 'state', 'country']
     const isValidOperation=updates.every((update)=>allowedUpdates.includes(update))
     if (!isValidOperation) {
         return res.status(400).send({
@@ -141,16 +129,16 @@ router.patch('/user', auth, async (req, res)=>{
             }
         })
     }
-    const user=req.user
+    const institute=req.institute
     try {
-        updates.forEach((update)=>user[update]=req.body[update])
-        await user.save()
+        updates.forEach((update)=>institute[update]=req.body[update])
+        await institute.save()
         res.status(200).send({
             response: {
                 code: 200,
                 message: 'updated'
             },
-            user
+            institute
         })
     } catch (error) {
         res.status(400).send({
@@ -162,14 +150,14 @@ router.patch('/user', auth, async (req, res)=>{
     }
 })
 
-router.delete('/user', auth, async (req, res)=>{
-    const user=req.user
+router.delete('/institute', auth, async (req, res)=>{
+    const institute=req.institute
     try {
-        await user.remove()
+        await institute.remove()
         res.status(200).send({
             response: {
                 code: 200,
-                message: 'user deleted'
+                message: 'institute deleted'
             }
         })
     } catch (error) {
@@ -180,4 +168,4 @@ router.delete('/user', auth, async (req, res)=>{
     }
 })
 
-module.exports = router
+module.exports=router
