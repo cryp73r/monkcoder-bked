@@ -54,6 +54,21 @@ router.post('/user', async (req, res)=>{
             token
         })
     } catch (error) {
+        if (error.message === 'UserNotExist') {
+            return res.status(404).send({
+                response: {
+                    code: 404,
+                    message: 'user not registered'
+                }
+            })
+        } else if (error.message === 'PasswordNotMatch') {
+            return res.status(403).send({
+                response: {
+                    code: 403,
+                    message: 'password didn\'t matched'
+                }
+            })
+        }
         res.status(400).send({
             response: {
                 codde: 400,
