@@ -38,3 +38,22 @@ Handles user's resume like: Creation, Updation, etc.
 | PATCH | `/resume` | Update Selected Resume fields | `Authorization` header field required<br />`name`, `email`, `summary`, `contactNo`, `alternateNo`, `address`, `state`, `country`, `educations`, `skills`, `certificates`, `languages`, `workExperiences` & `interests` are allowed updates<br />To be sent as a JSON request body |
 | DELETE | `/resume` | Delete Resume | `Authorization` header field required |
 
+### 3. Institute
+
+Handles institute's SignUp, SignIn, etc.
+
+| Method | Endpoint | Description | Parameter |
+| ------ | -------- | ----------- | --------- |
+| POST | `/institute/create` | Create New Institute | `regId`, `name`, `contactNo`, `address`, `pincode`, `city`, `state`, `country`, `email` & `password` are required fields<br />`summary` & `alternateNo` are optional fields<br />To be sent as a JSON request body |
+| POST | `/institute` | Login Institute | `email` and `password` are required fields<br />To be sent as a JSON request body |
+| GET | `/institute` | Get Institute Details | `Authorization` header field required |
+| POST | `/institute/logout` | Logout Institute | `Authorization` header field required |
+| POST | `/institute/logoutall` | Logout All Institute | `Authorization` header field required |
+| PATCH | `/institute` | Update Institute Details | `Authorization` header field required<br />`email`, `password`, `summary`, `contactNo`, `alternateNo`, `address`, `pincode`, `city`, `state` & `country` are allowed updates<br />To be sent as a JSON request body |
+| DELETE | `/institute` | Delete Institute | `Authorization` header field required |
+
+### 4. Pincode
+
+Get details from pincode like: state, city, country, etc.
+
+Use Official API provided by **India Post** [Documentation Here](http://www.postalpincode.in/Api-Details)
