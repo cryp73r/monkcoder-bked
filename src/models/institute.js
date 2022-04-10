@@ -3,7 +3,7 @@ const validator=require('validator')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcryptjs')
 
-const institueSchema=mongoose.Schema({
+const instituteSchema=mongoose.Schema({
     regId: {
         type: String,
         required: true,
@@ -77,7 +77,7 @@ const institueSchema=mongoose.Schema({
     timestamps: true
 })
 
-institueSchema.methods.generateAuthToken=async function() {
+instituteSchema.methods.generateAuthToken=async function() {
     const institute=this
     const token=jwt.sign({_id: institute._id.toString()}, process.env.JWT_SECRET)
     institute.tokens=institute.tokens.concat({token})
@@ -85,7 +85,7 @@ institueSchema.methods.generateAuthToken=async function() {
     return token
 }
 
-institueSchema.methods.toJSON = function () {
+instituteSchema.methods.toJSON = function () {
     const institute = this
     const instituteObject = institute.toObject()
     delete instituteObject.password
@@ -114,6 +114,6 @@ instituteSchema.pre('save', async function (next) {
     next()
 })
 
-const Institute=mongoose.model('Institute', institueSchema)
+const Institute=mongoose.model('Institute', instituteSchema)
 
 module.exports=Institute

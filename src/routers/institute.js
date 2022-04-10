@@ -8,7 +8,7 @@ router.post('/institute/create', async (req, res)=>{
     const institute=new Institute(req.body)
     try {
         await institute.save()
-        const token=institute.generateAuthToken()
+        const token=await institute.generateAuthToken()
         res.status(201).send({
             response: {
                 code: 201,
