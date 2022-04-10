@@ -40,8 +40,7 @@ const resumeSchema=mongoose.Schema({
     },
     pincode: {
         type: Number,
-        required: true,
-        
+        required: true
     },
     city: {
         type: String,
@@ -86,6 +85,7 @@ const resumeSchema=mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        unique: true,
         ref: 'User'
     }
 }, {
